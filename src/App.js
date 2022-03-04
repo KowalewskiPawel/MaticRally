@@ -1,31 +1,31 @@
 import Phaser from "phaser";
 import { IonPhaser } from "@ion-phaser/react";
 import { useMoralis } from "react-moralis";
-
+import { useEffect, useState } from "react";
 
 const App = () => {
   const { Moralis, authenticate, logout, isAuthenticated, user } = useMoralis();
+  const [game, setGame] = useState(null);
 
-  const game = {
-    width: 800,
-    height: 600,
-    type: Phaser.AUTO,
-    physics: {
-      default: "arcade",
-      arcade: {
-        gravity: { y: 300 },
-        debug: false,
+  useEffect(() => {
+    setGame({
+      width: 800,
+      height: 600,
+      type: Phaser.AUTO,
+      physics: {
+        default: "arcade",
+        arcade: {
+          gravity: { y: 300 },
+          debug: false,
+        },
       },
-    },
-    scene: {
-      preload: function () {
+      scene: {
+        preload: function () {},
+        create: async function () {},
+        update: async function () {},
       },
-      create: async function () {
-      },
-      update: async function () {
-      },
-    },
-  };
+    });
+  }, [user]);
 
   if (!isAuthenticated) {
     return (
