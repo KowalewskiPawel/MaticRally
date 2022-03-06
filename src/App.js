@@ -3,8 +3,8 @@ import { IonPhaser } from "@ion-phaser/react";
 import { useMoralis } from "react-moralis";
 import { useEffect, useState } from "react";
 
-import track from "./assets/tracks/test.jpg";
-import car from "./assets/cars/car.png";
+import track from "./game/assets/tracks/test.jpg";
+import car from "./game/assets/cars/car.png";
 
 const App = () => {
   const { Moralis, authenticate, logout, isAuthenticated, user } = useMoralis();
@@ -12,58 +12,84 @@ const App = () => {
 
   useEffect(() => {
     let carSprite;
-    let cursors = null;
-    let velocity = 0;
+    let cursors;
+    let tracker1;
+    let tracker2;
 
     setGame({
       width: 800,
       height: 600,
       type: Phaser.AUTO,
-      physics: {
-        default: "arcade",
-        arcade: {
-          debug: false,
-        },
-      },
       scene: {
+        physics: {
+          default: "matter",
+          arcade: {
+            debug: true,
+          },
+          matter: {
+            debug: true,
+            gravity: {
+              x: 0,
+              y: 0
+            }
+          }
+        },
         preload: function () {
           this.load.setCORS("anonymous");
           this.textures.addBase64("car", car);
           this.load.image("background", track);
         },
+
         create: async function () {
           this.add.image(400, 300, "background").setScale(0.9);
-          carSprite = await this.physics.add
-            .sprite(500, 200, "car")
-            .setScale(0.4)
-            .refreshBody();
 
-          this.physics.p2.enable(carSprite);
-          carSprite.body.angle = 90;
+          carSprite = this.matter.add.image(400, 300, 'car');
+          carSprite.setAngle(0);
+          carSprite.setFrictionAir(0.1);
+          carSprite.setMass(10);
+
+          this.matter.world.setBounds(0, 0, 800, 600);
+
+          tracker1 = this.add.rectangle(0, 0, 4, 4, 0x00ff00);
+          tracker2 = this.add.rectangle(0, 0, 4, 4, 0xff0000);
 
           cursors = await this.input.keyboard.createCursorKeys();
         },
         update: async function () {
-          if (cursors.up.isDown && velocity <= 400) {
-            velocity += 7;
-          } else {
-            if (velocity >= 7) velocity -= 7;
+          var point1 = carSprite.getTopRight();
+          var point2 = carSprite.getBottomRight();
+
+          tracker1.setPosition(point1.x, point1.y);
+          tracker2.setPosition(point2.x, point2.y);
+          const isMoving = cursors.up.isDown || cursors.down.isDown;
+
+          if (cursors.up.isDown) {
+            carSprite.thrust(0.025);
+          }
+          else if (cursors.down.isDown) {
+            carSprite.thrustBack(0.025);
           }
 
-          carSprite.body.velocity.x =
-            velocity * Math.cos((carSprite.angle - 90) * 0.01745);
-          carSprite.body.velocity.y =
-            velocity * Math.sin((carSprite.angle - 90) * 0.01745);
+          if(isMoving) {
+            const moveDir = cursors.up.isDown ? 1 : -1;
 
-          if (cursors.left.isDown)
-            carSprite.body.angularVelocity = -5 * (velocity / 1000);
-          else if (cursors.right.isDown)
-            carSprite.body.angularVelocity = 5 * (velocity / 1000);
-          else carSprite.body.angularVelocity = 0;
+            if (cursors.left.isDown) {
+              carSprite.setAngle(carSprite.angle -= 1 * moveDir)
+            }
+            
+            if (cursors.right.isDown) {
+              carSprite.setAngle(carSprite.angle += 1 * moveDir)
+            }
+          }
+
+          // console.log({isMoving, angle: carSprite.angle})
+
         },
       },
     });
-  }, []);
+    console.log({ cursors })
+  },
+    []);
 
   if (!isAuthenticated) {
     return (
