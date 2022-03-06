@@ -14,15 +14,21 @@ const App = () => {
     let carSprite;
     let cursors = null;
     let velocity = 0;
+    let tracker1;
+    let tracker2;
 
     setGame({
       width: 800,
       height: 600,
       type: Phaser.AUTO,
       physics: {
-        default: "arcade",
-        arcade: {
+        default: "matter",
+        matter: {
           debug: false,
+          gravity: {
+            x: 0,
+            y: 0,
+          },
         },
       },
       scene: {
@@ -32,34 +38,55 @@ const App = () => {
           this.load.image("background", track);
         },
         create: async function () {
-          this.add.image(400, 300, "background").setScale(0.9);
-          carSprite = await this.physics.add
-            .sprite(500, 200, "car")
-            .setScale(0.4)
-            .refreshBody();
+          this.add.tileSprite(400, 300, 800, 600, "background");
 
-          this.physics.p2.enable(carSprite);
-          carSprite.body.angle = 90;
+          car = this.matter.add.image(400, 300, "car");
+          car.setAngle(-90);
+          car.setFrictionAir(0.1);
+          car.setMass(10);
 
-          cursors = await this.input.keyboard.createCursorKeys();
+          this.matter.world.setBounds(0, 0, 800, 600);
+
+          tracker1 = this.add.rectangle(0, 0, 4, 4, 0x00ff00);
+          tracker2 = this.add.rectangle(0, 0, 4, 4, 0xff0000);
+
+          cursors = this.input.keyboard.createCursorKeys();
         },
         update: async function () {
-          if (cursors.up.isDown && velocity <= 400) {
-            velocity += 7;
-          } else {
-            if (velocity >= 7) velocity -= 7;
+          var point1 = car.getTopRight();
+          var point2 = car.getBottomRight();
+
+          tracker1.setPosition(point1.x, point1.y);
+          tracker2.setPosition(point2.x, point2.y);
+
+          var speed = 0.25;
+          // var angle = { x: speed * Math.cos(car.body.angle), y: speed * Math.sin(car.body.angle) };
+          // var angle = { x: 0, y: 0 };
+
+          if (cursors.left.isDown) {
+            car.applyForceFrom(
+              { x: point1.x, y: point1.y },
+              { x: -speed * Math.cos(car.body.angle), y: 0 }
+            );
+
+            // Phaser.Physics.Matter.Matter.Body.setAngularVelocity(car.body, -0.05);
+            // car.angle -= 4;
+          } else if (cursors.right.isDown) {
+            car.applyForceFrom(
+              { x: point2.x, y: point2.y },
+              { x: speed * Math.cos(car.body.angle), y: 0 }
+            );
+
+            // car.applyForceFrom();
+            // Phaser.Physics.Matter.Matter.Body.setAngularVelocity(car.body, 0.05);
+            // car.angle += 4;
           }
 
-          carSprite.body.velocity.x =
-            velocity * Math.cos((carSprite.angle - 90) * 0.01745);
-          carSprite.body.velocity.y =
-            velocity * Math.sin((carSprite.angle - 90) * 0.01745);
-
-          if (cursors.left.isDown)
-            carSprite.body.angularVelocity = -5 * (velocity / 1000);
-          else if (cursors.right.isDown)
-            carSprite.body.angularVelocity = 5 * (velocity / 1000);
-          else carSprite.body.angularVelocity = 0;
+          if (cursors.up.isDown) {
+            car.thrust(0.025);
+          } else if (cursors.down.isDown) {
+            car.thrustBack(0.1);
+          }
         },
       },
     });
