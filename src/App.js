@@ -19,9 +19,9 @@ const App = () => {
     let tracker2;
 
     setGame({
-      width: 800,
-      height: 600,
-      type: Phaser.AUTO,
+      width: 1024,
+      height: 768,
+      type: Phaser.CANVAS,
       physics: {
         default: "matter",
         matter: {
