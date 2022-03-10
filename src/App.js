@@ -16,10 +16,7 @@ const App = () => {
     let tracker1;
     let tracker2;
 
-    setGame({
-      width: 800,
-      height: 600,
-      type: Phaser.AUTO,
+    const gameMain = {
       scene: {
         physics: {
           default: "matter",
@@ -30,9 +27,9 @@ const App = () => {
             debug: true,
             gravity: {
               x: 0,
-              y: 0
-            }
-          }
+              y: 0,
+            },
+          },
         },
         preload: function () {
           this.load.setCORS("anonymous");
@@ -43,10 +40,10 @@ const App = () => {
         create: async function () {
           this.add.image(400, 300, "background").setScale(0.9);
 
-          carSprite = this.matter.add.image(400, 300, 'car');
+          carSprite = this.matter.add.image(400, 300, "car").setScale(0.4);
           carSprite.setAngle(0);
-          carSprite.setFrictionAir(0.1);
-          carSprite.setMass(10);
+          carSprite.setFrictionAir(0.2);
+          carSprite.setMass(400);
 
           this.matter.world.setBounds(0, 0, 800, 600);
 
@@ -64,32 +61,37 @@ const App = () => {
           const isMoving = cursors.up.isDown || cursors.down.isDown;
 
           if (cursors.up.isDown) {
-            carSprite.thrust(0.025);
-          }
-          else if (cursors.down.isDown) {
-            carSprite.thrustBack(0.025);
+            carSprite.thrust(0.45);
+          } else if (cursors.down.isDown) {
+            carSprite.thrustBack(0.25);
           }
 
-          if(isMoving) {
+          if (isMoving) {
             const moveDir = cursors.up.isDown ? 1 : -1;
 
             if (cursors.left.isDown) {
-              carSprite.setAngle(carSprite.angle -= 1 * moveDir)
+              carSprite.setAngle((carSprite.angle -= 1 * moveDir));
             }
-            
+
             if (cursors.right.isDown) {
-              carSprite.setAngle(carSprite.angle += 1 * moveDir)
+              carSprite.setAngle((carSprite.angle += 1 * moveDir));
             }
           }
 
           // console.log({isMoving, angle: carSprite.angle})
-
         },
       },
+    };
+
+    setGame({
+      width: 800,
+      height: 600,
+      type: Phaser.AUTO,
     });
-    console.log({ cursors })
-  },
-    []);
+
+    game.state.add("GameMain", gameMain);
+    game.state.start("GameMain");
+  }, []);
 
   if (!isAuthenticated) {
     return (
