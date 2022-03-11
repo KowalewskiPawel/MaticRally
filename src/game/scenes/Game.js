@@ -1,5 +1,9 @@
 import Phaser from 'phaser';
 import asphalt_road_tiles from '../assets/tiles/asphalt_road';
+import grass_textures_tiles from '../assets/tiles/grass';
+import objects_textures from '../assets/objects';
+import cars_textures from '../assets/cars';
+
 
 import car from "../assets/cars/car_red_1.png";
 import landTiles from "../assets/tilesets/land_tiles.png"
@@ -9,6 +13,8 @@ import track1JSON from "../assets/tracks/track_1.json"
 export class Game extends Phaser.Scene {
     cursors;
     carSprite;
+    carsNames = {};
+    tentsGroup = {};
     tracker1;
     tracker2;
 
@@ -17,15 +23,22 @@ export class Game extends Phaser.Scene {
      }
 
     preload() {
-        const asphalt_tiles = Object.keys(asphalt_road_tiles)
-        // console.log(asphalt_tiles);
-        asphalt_tiles.map(tile => {
-            // this.textures.addBase64(tile, asphalt_road_tiles[tile]);
-            this.load.image(tile, asphalt_road_tiles[tile]);
+        Object.keys(asphalt_road_tiles).forEach(tile => {
+            this.textures.addBase64(tile, asphalt_road_tiles[tile]);
         });
+        Object.keys(grass_textures_tiles).forEach(tile => {
+            this.textures.addBase64(tile, grass_textures_tiles[tile]);
+        });
+        Object.keys(objects_textures).forEach(texture => {
+            this.textures.addBase64(texture, objects_textures[texture]);
+        });
+        Object.keys(cars_textures).forEach(car => {
+            this.carsNames[car] = car;
+            this.textures.addBase64(car, cars_textures[car]);
+        })
+
 
         this.load.setCORS("anonymous");
-        this.textures.addBase64("car", car);
         this.load.image("land_tiles_set", landTiles)
         this.load.tilemapTiledJSON('track_1', trackJSON);
         this.load.tilemapTiledJSON('track_11', track1JSON);
@@ -34,38 +47,72 @@ export class Game extends Phaser.Scene {
     async create() {
         const tileMap = this.make.tilemap({key: 'track_1'});
         const tileMap1 = this.make.tilemap({key: 'track_11'});
-        const asphalt_tiles = Object.keys(asphalt_road_tiles)
-        // asphalt_tiles.map(tile => {
-        //     tileMap1.addTilesetImage(`../tiles/${tile}.png`, asphalt_road_tiles[tile]);
-        // })
-        
+        console.log(this)
         console.log(tileMap1)
-        const grass = tileMap.addTilesetImage('land_tiles', 'land_tiles_set');
-        console.log(tileMap)
+        const asphalt_tiles = Object.keys(asphalt_road_tiles).map(tile => {
+            return tileMap1.addTilesetImage(`../tiles/asphalt_road/${tile}.png`, tile);
+        })
+        const grass_tiles = Object.keys(grass_textures_tiles).map(tile => {
+            return tileMap1.addTilesetImage(`../tiles/grass/${tile}.png`, tile);
+        })
+        const objects_images = Object.keys(objects_textures).map(async texture  => {
+            const onList = this.textures.list[texture];
+            if (onList) {
+                const src = this.textures.list[texture].source[0];
+                return tileMap1.addTilesetImage(`../objects/${texture}.png`, texture, src.width, src.height);
+            }
+            else {
+                await this.textures.on('onload', (key, loaded) => {
+                    if (key === texture) {
+                        const src = loaded.source[0]
+                        return tileMap1.addTilesetImage(`../objects/${texture}.png`, texture, src.width, src.height);
+                    }
+                })
+            }
+        })
+        this.tentsGroup = this.add.group();
+        const tentsLayer = tileMap1.getObjectLayer('tents')
+        // const pickupsGameObjects = tileMap1.createFromObjects('tents');
+        // pickupsGameObjects.forEach((object) => { 
+        //     console.log(object)
+        //     // const sprite = {}
+        //     // sprite.setVisible(true); 
+        //     // // sprite.setDepth(9); 
+        //     this.tentsGroups.add(object); 
+        // });
+        tentsLayer.objects.forEach(obj => {
+            // this.tentsGroups.create(obj.x, obj.y, objects_images)
+            // console.log(this.tentsGroups);
+            console.log(obj)
+            this.matter.add.image(obj.x, obj.y, this.carsNames.car_red_1, undefined, {isStatic: true})
+        })
 
-        tileMap.createStaticLayer('bedrock', grass);
-        tileMap.createStaticLayer('track', grass);
-      
+        this.barrelGroup = this.add.group();
+        const barrelsLayer = tileMap1.getObjectLayer('tires')
 
-        // console.log(tileMap)
-        // Parameters: layer name (or index) from Tiled, tileset, x, y
-        // const belowLayer = tileMap.createStaticLayer("grass", );
-        
-        // this.carSprite = this.matter.add.image(2560, 22000, 'car')
-        this.carSprite = this.matter.add.image(400, 300, 'car')
-        // this.carSprite.setScale(0.6)
+        barrelsLayer.objects.forEach(obj => {
+            // this.tentsGroups.create(obj.x, obj.y, objects_images)
+            // console.log(this.tentsGroups);
+            console.log(obj)
+            this.matter.add.image(obj.x, obj.y, 'tires_red', undefined, {isStatic: false, mass: 1000})
+        })
+
+
+        tileMap1.createLayer('grass', grass_tiles);
+        tileMap1.createLayer('track', asphalt_tiles);       
+
+        this.carSprite = this.matter.add.image(400, 300, "car_red_1");
+
         this.carSprite.setFrictionAir(0.1);
         this.carSprite.setMass(500);
 
         this.cameras.main.startFollow(this.carSprite, true);
 
-        this.matter.world.setBounds(0, 0, 5120, 25600);
 
         this.tracker1 = this.add.rectangle(0, 0, 4, 4, 0x00ff00);
         this.tracker2 = this.add.rectangle(0, 0, 4, 4, 0xff0000);
 
         this.cursors = await this.input.keyboard.createCursorKeys();
-        console.log({carSprite: this.carSprite, cursors: this.cursors})
     }
 
     async update() {
