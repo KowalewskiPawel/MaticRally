@@ -8,13 +8,15 @@ import landTiles from "../assets/tilesets/land_tiles.png";
 import trackJSON from "../assets/tracks/long_with_os.json";
 import terrainsAtlasJSON from "../assets/spritesheets/terrains.json"
 import terrainsAtlasPNG from "../assets/spritesheets/terrains.png"
-import roadsAtlasJSON from "../assets/spritesheets/terrains.json"
-import roadsAtlasPNG from "../assets/spritesheets/terrains.png"
+import roadsAtlasJSON from "../assets/spritesheets/roads.json"
+import roadsAtlasPNG from "../assets/spritesheets/roads.png"
+import carsAtlasJSON from "../assets/spritesheets/cars.json"
+import carsAtlasPNG from "../assets/spritesheets/cars.png"
 
 export class Game extends Phaser.Scene {
  
     constructor() {
-        super();
+        super({ key: 'game' });
     }
 
     preload() {
@@ -23,19 +25,14 @@ export class Game extends Phaser.Scene {
         this.load.image("terrains-tileset", terrainsAtlasPNG);
         this.load.atlas('roads', roadsAtlasPNG, roadsAtlasJSON);
         this.load.atlas('terrains', terrainsAtlasPNG, terrainsAtlasJSON);
+        this.load.atlas('cars', carsAtlasPNG, carsAtlasJSON);
         this.load.tilemapTiledJSON("track_1", trackJSON);
     }
 
     create() {
-        var atlasTexture = this.textures.get('roads');
-
-        var frames = atlasTexture.getFrameNames();
-
-        console.log(frames)
 
         const trackMap = this.make.tilemap({ key: "track_1" });
-        console.log(this);
-        console.log(trackMap)
+
 
         const asphalt_tiles = trackMap.addTilesetImage('roads', 'roads-tileset');
         const grass_tiles = trackMap.addTilesetImage('terrains', 'terrains-tileset');
@@ -94,8 +91,14 @@ export class Game extends Phaser.Scene {
         trackMap.createLayer("grass", grass_tiles);
         trackMap.createLayer("track", asphalt_tiles);
 
-        this.carSprite = this.matter.add.image(4000, 2300, "car_red_1");
+        // this.carSprite = this.matter.add.image(4000, 2300, "car_red_1");
+        var atlasTexture = this.textures.get('cars');
+        var frames = atlasTexture.getFrameNames();
+        console.log(frames)
+        this.carSprite = this.matter.add.image(5450, 36400, "cars", "car_red_1");
+        this.ghost = this.matter.add.image(5550, 36400, "cars", "car_blue_1", {mass: 400});
 
+        this.carSprite.setAngle(270);
         this.carSprite.setFrictionAir(0.1);
         this.carSprite.setMass(400);
 
