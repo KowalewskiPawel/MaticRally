@@ -35,7 +35,7 @@ const App = () => {
     const connectWallet = async () => {
       const tbl = await connect({ network: "testnet" });
       const fetchNft = await tbl.query(
-        "SELECT image FROM adsnft1_402 WHERE id=1;"
+        "SELECT image FROM adsnft1_402 WHERE id=0;"
       );
       setNft(fetchNft.data.rows[0][0]);
     };
