@@ -1,8 +1,8 @@
 {
-  "name": "nftplatformer",
+  "name": "rally3.0",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://.",
+  "homepage": ".",
   "dependencies": {
     "@ion-phaser/core": "^1.3.0",
     "@ion-phaser/react": "^1.3.0",
