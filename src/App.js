@@ -3,7 +3,7 @@ import { IonPhaser } from "@ion-phaser/react";
 import { useMoralis } from "react-moralis";
 import { useEffect, useState } from "react";
 
-import { Game } from "./game/scenes/Game";
+import { Game, Preloader, Garage } from "./game/scenes";
 
 const App = () => {
   const { Moralis, authenticate, logout, isAuthenticated, user } = useMoralis();
@@ -24,7 +24,7 @@ const App = () => {
           }
         }
       },
-      scene: [Game]
+      scene: [Preloader, Game, Garage]
     });
   },
     []);
