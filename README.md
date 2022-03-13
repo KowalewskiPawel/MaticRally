@@ -51,4 +51,4 @@ Run `npx hardhat run scripts/deploy.js --network rinkeby` command.
 
 ### Live Preview
 
-[]()
+[https://rally30.on.fleek.co](https://rally30.on.fleek.co)
