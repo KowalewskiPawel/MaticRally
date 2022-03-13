@@ -81,10 +81,12 @@ export class Game extends Phaser.Scene {
     var atlasTexture = this.textures.get("cars");
     var frames = atlasTexture.getFrameNames();
     console.log(frames);
+
     this.carSprite = this.matter.add.image(5450, 36400, "cars", "car_red_1");
-    this.ghost = this.matter.add.image(5550, 36400, "cars", "car_blue_1", {
+    /*this.ghost = this.matter.add.image(5550, 36400, "cars", "car_blue_1", {
       mass: 400,
     });
+    */
 
     const tires = trackMap.getObjectLayer("tires");
     tires.objects.forEach((o) => {
@@ -94,9 +96,18 @@ export class Game extends Phaser.Scene {
       });
     });
 
-    const startStop = trackMap.getObjectLayer("start-stop");
+    const startStop = trackMap.getObjectLayer("start-stop").objects[0];
 
-    console.log(startStop);
+    this.startLine = this.matter.add.rectangle(
+      startStop.x + 170,
+      startStop.y,
+      startStop.width,
+      100,
+      {
+        isSensor: true,
+        isStatic: true,
+      }
+    );
 
     this.carSprite.setAngle(270);
     this.carSprite.setFrictionAir(0.01);
@@ -108,6 +119,28 @@ export class Game extends Phaser.Scene {
     this.tracker2 = this.add.rectangle(0, 0, 4, 4, 0xff0000);
 
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    this.isStarted = false;
+
+    this.timer = null;
+
+    this.stageTime = this.add.text(this.cameras.x, this.cameras.y ,"Time: ", { font: "20px Arial", fill: "black" });
+    this.stageTime.setScrollFactor(0,0);
+
+    this.startTimer = () => {
+        if (this.isStarted) {
+            console.log(Math.round(this.timer.getElapsedSeconds() * 100) / 100);
+          return;
+        }
+        this.isStarted = true;
+        this.timer = this.time.addEvent({
+            repeat: 99999999999999,
+            timeScale: 1,
+            paused: false
+        });
+
+        
+      }
 
     // tentsLayer.objects.forEach((obj) => {
     //     // this.tentsGroups.create(obj.x, obj.y, objects_images)
@@ -142,6 +175,12 @@ export class Game extends Phaser.Scene {
     this.tracker2.setPosition(point2.x, point2.y);
 
     const isMoving = this.cursors.up.isDown || this.cursors.down.isDown;
+
+    this.matter.overlap(this.carSprite, this.startLine, this.startTimer);
+
+    if (this.isStarted) {
+    this.stageTime.setText("Time: " + Math.round(this.timer.getElapsedSeconds() * 100) / 100)
+    }
 
     if (this.cursors.up.isDown) {
       this.carSprite.thrust(0.2);

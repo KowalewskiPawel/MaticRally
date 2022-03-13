@@ -27,22 +27,21 @@
          "name":"start-stop",
          "objects":[
                 {
-                 "height":0,
-                 "id":6,
+                 "height":49,
+                 "id":1015,
                  "name":"",
-                 "point":true,
                  "properties":[
                         {
-                         "name":"point_type",
+                         "name":"type",
                          "type":"string",
                          "value":"start"
                         }],
                  "rotation":0,
                  "type":"",
-                 "visible":false,
-                 "width":0,
-                 "x":5440,
-                 "y":35898.6666666667
+                 "visible":true,
+                 "width":347,
+                 "x":5267,
+                 "y":35877
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -11432,7 +11431,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":1012,
+ "nextobjectid":1016,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.8.2",
