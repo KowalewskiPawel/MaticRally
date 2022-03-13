@@ -34,9 +34,10 @@ export class Garage extends Phaser.Scene {
         startRaceButton.setInteractive();
         startRaceButton.on("pointerdown", () => {
             if (!window.memberNFT) {
-              return console.log("You need NFT");
+              alert("You need to mint your NFT");
+            } else {
+                this.scene.start("game");
             }
-          this.scene.start("game");
         });
         // MINT CAR
 
