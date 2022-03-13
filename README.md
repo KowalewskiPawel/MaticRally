@@ -43,7 +43,7 @@ run `npx hardhat compile` command.
 
 ### Deploying Smart Contract
 
-Run `npx hardhat run scripts/deploy.js --network mumbai` command.
+Run `npx hardhat run scripts/deploy.js --network rinkeby` command.
 
 ## This has been created during ETHGlobal Buildquest Hackathon
 
