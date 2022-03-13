@@ -1,19 +1,6 @@
-import Phaser from 'phaser';
-import asphalt_road_tiles from '../assets/tiles/asphalt_road';
-import grass_textures_tiles from '../assets/tiles/grass';
-import objects_textures from '../assets/objects';
-// import cars_textures from '../assets/cars';
+import Phaser from "phaser";
 
-import landTiles from "../assets/tilesets/land_tiles.png";
 import trackJSON from "../assets/tracks/long_with_os.json";
-import terrainsAtlasJSON from "../assets/spritesheets/terrains.json"
-import terrainsAtlasPNG from "../assets/spritesheets/terrains.png"
-import roadsAtlasJSON from "../assets/spritesheets/roads.json"
-import roadsAtlasPNG from "../assets/spritesheets/roads.png"
-import carsAtlasJSON from "../assets/spritesheets/cars.json"
-import carsAtlasPNG from "../assets/spritesheets/cars.png"
-import objectsAtlasJSON from "../assets/spritesheets/objects_spritesheet.json";
-import objectAtlasPNG from "../assets/spritesheets/objects_spritesheet.png";
 export class Game extends Phaser.Scene {
   constructor() {
     super({ key: "game" });
@@ -21,13 +8,7 @@ export class Game extends Phaser.Scene {
 
   preload() {
     this.load.setCORS("anonymous");
-    this.load.image("roads-tileset", roadsAtlasPNG);
-    this.load.image("terrains-tileset", terrainsAtlasPNG);
-    this.load.atlas("roads", roadsAtlasPNG, roadsAtlasJSON);
-    this.load.atlas("terrains", terrainsAtlasPNG, terrainsAtlasJSON);
-    this.load.atlas("cars", carsAtlasPNG, carsAtlasJSON);
     this.load.tilemapTiledJSON("track_1", trackJSON);
-    this.load.atlas("objects", objectAtlasPNG, objectsAtlasJSON);
   }
 
   create() {
@@ -135,54 +116,57 @@ export class Game extends Phaser.Scene {
 
     this.timer = null;
 
-    this.stageTime = this.add.text(this.cameras.x, this.cameras.y ,"Time: ", { font: "20px Arial", fill: "black" });
-    this.stageTime.setScrollFactor(0,0);
+    this.stageTime = this.add.text(this.cameras.x, this.cameras.y, "Time: ", {
+      font: "20px Arial",
+      fill: "black",
+    });
+    this.stageTime.setScrollFactor(0, 0);
 
     this.startTimer = () => {
-        if (this.isStarted) {
-            console.log(Math.round(this.timer.getElapsedSeconds() * 100) / 100);
+      if (this.isStarted) {
+        console.log(Math.round(this.timer.getElapsedSeconds() * 100) / 100);
+        return;
+      }
+      this.isStarted = true;
+      this.timer = this.time.addEvent({
+        repeat: 99999999999999,
+        timeScale: 1,
+        paused: false,
+      });
+
+      this.stopTimer = () => {
+        if (!this.isStarted) {
           return;
         }
-        this.isStarted = true;
-        this.timer = this.time.addEvent({
-            repeat: 99999999999999,
-            timeScale: 1,
-            paused: false
-        });
+        this.timer.paused = true;
+      };
 
-        this.stopTimer = () => {
-            if (!this.isStarted) {
-              return;
-            }
-            this.timer.paused = true;
-      }
+      // tentsLayer.objects.forEach((obj) => {
+      //     // this.tentsGroups.create(obj.x, obj.y, objects_images)
+      //     // console.log(this.tentsGroups);
 
-    // tentsLayer.objects.forEach((obj) => {
-    //     // this.tentsGroups.create(obj.x, obj.y, objects_images)
-    //     // console.log(this.tentsGroups);
+      //     this.matter.add.image(obj.x, obj.y, "tent_red", undefined, {
+      //         isStatic: true,
+      //     });
+      // });
 
-    //     this.matter.add.image(obj.x, obj.y, "tent_red", undefined, {
-    //         isStatic: true,
-    //     });
-    // });
+      // barrelsLayer.objects.forEach((obj) => {
+      //     // this.tentsGroups.create(obj.x, obj.y, objects_images)
+      //     // console.log(obj);
 
-    // barrelsLayer.objects.forEach((obj) => {
-    //     // this.tentsGroups.create(obj.x, obj.y, objects_images)
-    //     // console.log(obj);
-
-    //     this.platforms = this.matter.add.sprite(
-    //         obj.x,
-    //         obj.y,
-    //         "tires_red",
-    //         undefined,
-    //         {
-    //             isStatic: false,
-    //             mass: 1000,
-    //         }
-    //     );
-    // });
+      //     this.platforms = this.matter.add.sprite(
+      //         obj.x,
+      //         obj.y,
+      //         "tires_red",
+      //         undefined,
+      //         {
+      //             isStatic: false,
+      //             mass: 1000,
+      //         }
+      //     );
+      // });
+    };
   }
-}
 
   async update() {
     const point1 = this.carSprite.getTopRight();
@@ -196,7 +180,9 @@ export class Game extends Phaser.Scene {
     this.matter.overlap(this.carSprite, this.stopLine, this.stopTimer);
 
     if (this.isStarted) {
-    this.stageTime.setText("Time: " + Math.round(this.timer.getElapsedSeconds() * 100) / 100)
+      this.stageTime.setText(
+        "Time: " + Math.round(this.timer.getElapsedSeconds() * 100) / 100
+      );
     }
 
     if (this.cursors.up.isDown) {

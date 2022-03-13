@@ -4,6 +4,8 @@ import { useMoralis } from "react-moralis";
 import { useEffect, useState } from "react";
 
 import { Game } from "./game/scenes/Game";
+import { Preload } from "./game/scenes/Preload";
+import { Garage } from "./game/scenes/Garage";
 
 const App = () => {
   const { Moralis, authenticate, logout, isAuthenticated, user } = useMoralis();
@@ -20,14 +22,13 @@ const App = () => {
           debug: true,
           gravity: {
             x: 0,
-            y: 0
-          }
-        }
+            y: 0,
+          },
+        },
       },
-      scene: [Game]
+      scene: [Preload, Game, Garage],
     });
-  },
-    []);
+  }, []);
 
   if (!isAuthenticated) {
     return (
