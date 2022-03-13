@@ -24,8 +24,12 @@ export class Garage extends Phaser.Scene {
         const startRaceButton = this.add.image(this.canvas.width/2, this.canvas.height- 64, 'button-start-race');
         startRaceButton.setInteractive();
 
-        startRaceButton.on('pointerdown', () => { console.log('pointerdown'); this.scene.start('game') });
+        startRaceButton.on("pointerdown", () => {
+          console.log("pointerdown");
+          this.scene.start("game");
+        });
 
+        console.log(window.memberNFT);
     }
 
 }

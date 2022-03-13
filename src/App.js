@@ -43,11 +43,20 @@ const App = () => {
         Rally3.abi,
         signer
       );
+      let memberNFT;
+
       setDappContract(dappContract);
-      const memberNFT = await dappContract.checkIfUserHasNFT();
+      window.dappContract = dappContract;
+
+      try {
+        memberNFT = await dappContract.checkIfUserHasNFT();
+      } catch (error) {
+        window.memberNFT = null;
+      }
 
       if (memberNFT) {
         setDriverNFT(transformDriverData(memberNFT));
+        window.memberNFT = driverNFT;
       }
     };
 

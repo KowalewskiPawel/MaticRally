@@ -1,7 +1,7 @@
 const transformDriverData = (driverData) => {
   return {
     power: driverData.power.toNumber(),
-    attempts: driverData.points.toNumber(),
+    points: driverData.points.toNumber(),
   };
 };
 
