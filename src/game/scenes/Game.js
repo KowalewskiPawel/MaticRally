@@ -109,6 +109,17 @@ export class Game extends Phaser.Scene {
       }
     );
 
+    this.stopLine = this.matter.add.rectangle(
+      startStop.x + 170,
+      startStop.y - 400,
+      startStop.width,
+      100,
+      {
+        isSensor: true,
+        isStatic: true,
+      }
+    );
+
     this.carSprite.setAngle(270);
     this.carSprite.setFrictionAir(0.01);
     this.carSprite.setMass(4000);
@@ -139,7 +150,11 @@ export class Game extends Phaser.Scene {
             paused: false
         });
 
-        
+        this.stopTimer = () => {
+            if (!this.isStarted) {
+              return;
+            }
+            this.timer.paused = true;
       }
 
     // tentsLayer.objects.forEach((obj) => {
@@ -167,6 +182,7 @@ export class Game extends Phaser.Scene {
     //     );
     // });
   }
+}
 
   async update() {
     const point1 = this.carSprite.getTopRight();
@@ -177,6 +193,7 @@ export class Game extends Phaser.Scene {
     const isMoving = this.cursors.up.isDown || this.cursors.down.isDown;
 
     this.matter.overlap(this.carSprite, this.startLine, this.startTimer);
+    this.matter.overlap(this.carSprite, this.stopLine, this.stopTimer);
 
     if (this.isStarted) {
     this.stageTime.setText("Time: " + Math.round(this.timer.getElapsedSeconds() * 100) / 100)
