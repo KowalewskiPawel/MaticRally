@@ -16,7 +16,6 @@ export class Game extends Phaser.Scene {
     // TO REMOVE
     var atlasTexture = this.textures.get("cars");
     var frames = atlasTexture.getFrameNames();
-    console.log(frames);
 
     const trackMap = this.make.tilemap({ key: "track_1" });
 
@@ -40,10 +39,10 @@ export class Game extends Phaser.Scene {
         chamfer: 32,
       });
     });
-    
+
     // LOAD NFT BANNERS
-    const nftBanners = trackMap.getObjectLayer('nft-banners').objects;
-    this.loadNFTs(nftBanners)
+    const nftBanners = trackMap.getObjectLayer("nft-banners").objects;
+    this.loadNFTs(nftBanners);
 
     // START STOP LINES
     const startStop = trackMap.getObjectLayer("start-stop").objects;
@@ -85,29 +84,31 @@ export class Game extends Phaser.Scene {
 
     this.timer = null;
 
-    this.stageTime = this.add.text(this.cameras.x, this.cameras.y ,"Time: ", { font: "20px Arial", fill: "black" });
-    this.stageTime.setScrollFactor(0,0);
+    this.stageTime = this.add.text(this.cameras.x, this.cameras.y, "Time: ", {
+      font: "20px Arial",
+      fill: "black",
+    });
+    this.stageTime.setScrollFactor(0, 0);
 
     this.startTimer = () => {
-        if (this.isStarted) {
-            console.log(Math.round(this.timer.getElapsedSeconds() * 100) / 100);
+      if (this.isStarted) {
+        return;
+      }
+      this.isStarted = true;
+      this.timer = this.time.addEvent({
+        repeat: 99999999999999,
+        timeScale: 1,
+        paused: false,
+      });
+
+      this.stopTimer = () => {
+        if (!this.isStarted) {
           return;
         }
-        this.isStarted = true;
-        this.timer = this.time.addEvent({
-            repeat: 99999999999999,
-            timeScale: 1,
-            paused: false
-        });
-
-        this.stopTimer = () => {
-            if (!this.isStarted) {
-              return;
-            }
-            this.timer.paused = true;
-      }
+        this.timer.paused = true;
+      };
+    };
   }
-}
 
   async update() {
     const point1 = this.carSprite.getTopRight();
@@ -121,7 +122,9 @@ export class Game extends Phaser.Scene {
     this.matter.overlap(this.carSprite, this.stopLine, this.stopTimer);
 
     if (this.isStarted) {
-    this.stageTime.setText("Time: " + Math.round(this.timer.getElapsedSeconds() * 100) / 100)
+      this.stageTime.setText(
+        "Time: " + Math.round(this.timer.getElapsedSeconds() * 100) / 100
+      );
     }
 
     if (this.cursors.up.isDown) {
@@ -152,14 +155,20 @@ export class Game extends Phaser.Scene {
   }
 
   loadNFTs(nftBanners) {
-    if(nftBanners) {
-      nftBanners.forEach(banner => {
-        this.load.image(`nft-banner-${banner.id}`, 'http://placekitten.com/300/200')
+
+    console.log(window.nftAd);
+    if (nftBanners) {
+      nftBanners.forEach((banner) => {
+        this.load.image(`nft-banner-${banner.id}`, window.nftAd);
         this.load.on(Phaser.Loader.Events.COMPLETE, () => {
-          this.add.image(banner.x + banner.width/2 , banner.y, `nft-banner-${banner.id}`)
-        })
+          this.add.image(
+            banner.x + banner.width / 2,
+            banner.y,
+            `nft-banner-${banner.id}`
+          ).setScale(0.3);
+        });
       });
-      this.load.start()
+      this.load.start();
     }
   }
 }

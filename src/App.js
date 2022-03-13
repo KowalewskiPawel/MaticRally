@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import { IonPhaser } from "@ion-phaser/react";
 import { useMoralis } from "react-moralis";
 import { useEffect, useState } from "react";
+
 import { Game, Preloader, Garage } from "./game/scenes";
 import { CONTRACT_ADDRESS } from "./consts";
 import Rally3 from "./abi/Rally3.json";
@@ -14,6 +15,7 @@ const App = () => {
   const [game, setGame] = useState(null);
   const [driverNFT, setDriverNFT] = useState(null);
   const [dappContract, setDappContract] = useState(null);
+  const [nftAd, setNftAd] = useState(null);
 
   useEffect(() => {
     setGame({
@@ -30,7 +32,7 @@ const App = () => {
           },
         },
       },
-      scene: [Preloader, Game, Garage]
+      scene: [Preloader, Game, Garage],
     });
   }, []);
 
@@ -57,12 +59,10 @@ const App = () => {
       } catch (error) {
         window.memberNFT = null;
       }
-
-      
     };
 
     fetchNFTMetadata();
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, driverNFT]);
 
   if (!isAuthenticated) {
     return (
