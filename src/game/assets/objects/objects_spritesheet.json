@@ -1,0 +1,839 @@
+{
+	"textures": [
+		{
+			"image": "objects_spritesheet.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 512,
+				"h": 1675
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "tribune_empty.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 448,
+						"h": 223
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 448,
+						"h": 223
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 448,
+						"h": 223
+					}
+				},
+				{
+					"filename": "skidmark_long_1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 60,
+						"h": 192
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 60,
+						"h": 192
+					},
+					"frame": {
+						"x": 451,
+						"y": 1,
+						"w": 60,
+						"h": 192
+					}
+				},
+				{
+					"filename": "skidmark_long_2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 60,
+						"h": 192
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 60,
+						"h": 192
+					},
+					"frame": {
+						"x": 451,
+						"y": 195,
+						"w": 60,
+						"h": 192
+					}
+				},
+				{
+					"filename": "tribune_full.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 448,
+						"h": 223
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 448,
+						"h": 223
+					},
+					"frame": {
+						"x": 1,
+						"y": 226,
+						"w": 448,
+						"h": 223
+					}
+				},
+				{
+					"filename": "skidmark_short_1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 60,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 60,
+						"h": 16
+					},
+					"frame": {
+						"x": 451,
+						"y": 389,
+						"w": 60,
+						"h": 16
+					}
+				},
+				{
+					"filename": "skidmark_short_2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 60,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 60,
+						"h": 16
+					},
+					"frame": {
+						"x": 451,
+						"y": 407,
+						"w": 60,
+						"h": 16
+					}
+				},
+				{
+					"filename": "barrel_blue.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 56,
+						"h": 56
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 56,
+						"h": 56
+					},
+					"frame": {
+						"x": 451,
+						"y": 425,
+						"w": 56,
+						"h": 56
+					}
+				},
+				{
+					"filename": "tribune_overhang_red.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 448,
+						"h": 144
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 448,
+						"h": 144
+					},
+					"frame": {
+						"x": 1,
+						"y": 451,
+						"w": 448,
+						"h": 144
+					}
+				},
+				{
+					"filename": "barrel_red.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 56,
+						"h": 56
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 56,
+						"h": 56
+					},
+					"frame": {
+						"x": 451,
+						"y": 483,
+						"w": 56,
+						"h": 56
+					}
+				},
+				{
+					"filename": "tires_red.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 56,
+						"h": 56
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 56,
+						"h": 56
+					},
+					"frame": {
+						"x": 451,
+						"y": 541,
+						"w": 56,
+						"h": 56
+					}
+				},
+				{
+					"filename": "tribune_overhang_striped.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 448,
+						"h": 144
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 448,
+						"h": 144
+					},
+					"frame": {
+						"x": 1,
+						"y": 597,
+						"w": 448,
+						"h": 144
+					}
+				},
+				{
+					"filename": "tires_red_alt.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 56,
+						"h": 56
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 56,
+						"h": 56
+					},
+					"frame": {
+						"x": 451,
+						"y": 599,
+						"w": 56,
+						"h": 56
+					}
+				},
+				{
+					"filename": "tires_white.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 56,
+						"h": 56
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 56,
+						"h": 56
+					},
+					"frame": {
+						"x": 451,
+						"y": 657,
+						"w": 56,
+						"h": 56
+					}
+				},
+				{
+					"filename": "tires_white_alt.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 56,
+						"h": 56
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 56,
+						"h": 56
+					},
+					"frame": {
+						"x": 451,
+						"y": 715,
+						"w": 56,
+						"h": 56
+					}
+				},
+				{
+					"filename": "tent_blue_large.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 256,
+						"h": 256
+					},
+					"frame": {
+						"x": 1,
+						"y": 743,
+						"w": 256,
+						"h": 256
+					}
+				},
+				{
+					"filename": "arrow_white.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 165,
+						"h": 99
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 165,
+						"h": 99
+					},
+					"frame": {
+						"x": 259,
+						"y": 743,
+						"w": 165,
+						"h": 99
+					}
+				},
+				{
+					"filename": "skidmark_long_3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 76,
+						"h": 192
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 76,
+						"h": 192
+					},
+					"frame": {
+						"x": 426,
+						"y": 773,
+						"w": 76,
+						"h": 192
+					}
+				},
+				{
+					"filename": "arrow_yellow.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 165,
+						"h": 99
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 165,
+						"h": 99
+					},
+					"frame": {
+						"x": 259,
+						"y": 844,
+						"w": 165,
+						"h": 99
+					}
+				},
+				{
+					"filename": "lights.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 160,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 160,
+						"h": 64
+					},
+					"frame": {
+						"x": 259,
+						"y": 945,
+						"w": 160,
+						"h": 64
+					}
+				},
+				{
+					"filename": "tent_red_large.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 256,
+						"h": 256
+					},
+					"frame": {
+						"x": 1,
+						"y": 1001,
+						"w": 256,
+						"h": 256
+					}
+				},
+				{
+					"filename": "rock1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 89,
+						"h": 72
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 89,
+						"h": 72
+					},
+					"frame": {
+						"x": 421,
+						"y": 967,
+						"w": 89,
+						"h": 72
+					}
+				},
+				{
+					"filename": "tree_small.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 141,
+						"h": 141
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 141,
+						"h": 141
+					},
+					"frame": {
+						"x": 259,
+						"y": 1011,
+						"w": 141,
+						"h": 141
+					}
+				},
+				{
+					"filename": "oil.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 109,
+						"h": 95
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 109,
+						"h": 95
+					},
+					"frame": {
+						"x": 402,
+						"y": 1041,
+						"w": 109,
+						"h": 95
+					}
+				},
+				{
+					"filename": "light_white.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 98,
+						"h": 235
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 98,
+						"h": 235
+					},
+					"frame": {
+						"x": 402,
+						"y": 1138,
+						"w": 98,
+						"h": 235
+					}
+				},
+				{
+					"filename": "tent_blue.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 128,
+						"h": 128
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 128,
+						"h": 128
+					},
+					"frame": {
+						"x": 259,
+						"y": 1154,
+						"w": 128,
+						"h": 128
+					}
+				},
+				{
+					"filename": "tree_large.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 214,
+						"h": 212
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 214,
+						"h": 212
+					},
+					"frame": {
+						"x": 1,
+						"y": 1259,
+						"w": 214,
+						"h": 212
+					}
+				},
+				{
+					"filename": "tent_red.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 128,
+						"h": 128
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 128,
+						"h": 128
+					},
+					"frame": {
+						"x": 217,
+						"y": 1284,
+						"w": 128,
+						"h": 128
+					}
+				},
+				{
+					"filename": "cone_down.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 46,
+						"h": 44
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 46,
+						"h": 44
+					},
+					"frame": {
+						"x": 347,
+						"y": 1284,
+						"w": 46,
+						"h": 44
+					}
+				},
+				{
+					"filename": "cone_straight.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 45,
+						"h": 44
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 45,
+						"h": 44
+					},
+					"frame": {
+						"x": 347,
+						"y": 1330,
+						"w": 45,
+						"h": 44
+					}
+				},
+				{
+					"filename": "light_yellow.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 98,
+						"h": 235
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 98,
+						"h": 235
+					},
+					"frame": {
+						"x": 394,
+						"y": 1375,
+						"w": 98,
+						"h": 235
+					}
+				},
+				{
+					"filename": "rock3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 87,
+						"h": 67
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 87,
+						"h": 67
+					},
+					"frame": {
+						"x": 217,
+						"y": 1414,
+						"w": 87,
+						"h": 67
+					}
+				},
+				{
+					"filename": "barrier_red.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 210,
+						"h": 62
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 210,
+						"h": 62
+					},
+					"frame": {
+						"x": 1,
+						"y": 1473,
+						"w": 210,
+						"h": 62
+					}
+				},
+				{
+					"filename": "skidmark_short_3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 76,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 76,
+						"h": 16
+					},
+					"frame": {
+						"x": 306,
+						"y": 1414,
+						"w": 76,
+						"h": 16
+					}
+				},
+				{
+					"filename": "rock2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 73,
+						"h": 68
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 73,
+						"h": 68
+					},
+					"frame": {
+						"x": 306,
+						"y": 1432,
+						"w": 73,
+						"h": 68
+					}
+				},
+				{
+					"filename": "barrel_blue_down.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 70,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 70,
+						"h": 48
+					},
+					"frame": {
+						"x": 213,
+						"y": 1483,
+						"w": 70,
+						"h": 48
+					}
+				},
+				{
+					"filename": "barrel_red_down.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 70,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 70,
+						"h": 48
+					},
+					"frame": {
+						"x": 285,
+						"y": 1502,
+						"w": 70,
+						"h": 48
+					}
+				},
+				{
+					"filename": "barrier_red_race.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 210,
+						"h": 62
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 210,
+						"h": 62
+					},
+					"frame": {
+						"x": 1,
+						"y": 1537,
+						"w": 210,
+						"h": 62
+					}
+				},
+				{
+					"filename": "barrier_white.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 210,
+						"h": 62
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 210,
+						"h": 62
+					},
+					"frame": {
+						"x": 1,
+						"y": 1601,
+						"w": 210,
+						"h": 62
+					}
+				},
+				{
+					"filename": "barrier_white_race.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 210,
+						"h": 62
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 210,
+						"h": 62
+					},
+					"frame": {
+						"x": 213,
+						"y": 1612,
+						"w": 210,
+						"h": 62
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:a4ca15a831e2e3b8731b0e33ebe5dc10:b9519b03f8f5cdd1ec02159a49ab8e6e:03b426425331513ec43dd541e1bd8dc7$"
+	}
+}
