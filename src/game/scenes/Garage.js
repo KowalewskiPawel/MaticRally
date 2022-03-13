@@ -25,7 +25,9 @@ export class Garage extends Phaser.Scene {
         startRaceButton.setInteractive();
 
         startRaceButton.on("pointerdown", () => {
-          console.log("pointerdown");
+            if (!window.memberNFT) {
+              return console.log("You need NFT");
+            }
           this.scene.start("game");
         });
 

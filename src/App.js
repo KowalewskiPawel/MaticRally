@@ -50,14 +50,15 @@ const App = () => {
 
       try {
         memberNFT = await dappContract.checkIfUserHasNFT();
+        if (memberNFT) {
+          setDriverNFT(transformDriverData(memberNFT));
+          window.memberNFT = driverNFT;
+        }
       } catch (error) {
         window.memberNFT = null;
       }
 
-      if (memberNFT) {
-        setDriverNFT(transformDriverData(memberNFT));
-        window.memberNFT = driverNFT;
-      }
+      
     };
 
     fetchNFTMetadata();
