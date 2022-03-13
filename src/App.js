@@ -3,13 +3,11 @@ import { ethers } from "ethers";
 import { IonPhaser } from "@ion-phaser/react";
 import { useMoralis } from "react-moralis";
 import { useEffect, useState } from "react";
-
+import { Game, Preloader, Garage } from "./game/scenes";
 import { CONTRACT_ADDRESS } from "./consts";
 import Rally3 from "./abi/Rally3.json";
 
 import transformDriverData from "./utils";
-
-import { Game } from "./game/scenes/Game";
 
 const App = () => {
   const { Moralis, authenticate, logout, isAuthenticated, user } = useMoralis();
@@ -32,7 +30,7 @@ const App = () => {
           },
         },
       },
-      scene: [Game],
+      scene: [Preloader, Game, Garage]
     });
   }, []);
 
