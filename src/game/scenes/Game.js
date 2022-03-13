@@ -28,9 +28,16 @@ export class Game extends Phaser.Scene {
     this.load.atlas("cars", carsAtlasPNG, carsAtlasJSON);
     this.load.tilemapTiledJSON("track_1", trackJSON);
     this.load.atlas("objects", objectAtlasPNG, objectsAtlasJSON);
+
+    console.log(this)
   }
 
   create() {
+    // TO REMOVE
+    var atlasTexture = this.textures.get("cars");
+    var frames = atlasTexture.getFrameNames();
+    console.log(frames);
+
     const trackMap = this.make.tilemap({ key: "track_1" });
 
     const asphalt_tiles = trackMap.addTilesetImage("roads", "roads-tileset");
@@ -38,55 +45,13 @@ export class Game extends Phaser.Scene {
       "terrains",
       "terrains-tileset"
     );
-    // const asphalt_tiles = Object.keys(asphalt_road_tiles).map((tile) => {
-    //     const isLoaded = !!this.textures[tile];
-    //     if(isLoaded) {
-    //         return trackMap.addTilesetImage(
-    //             `../tiles/asphalt_road/${tile}.png`,
-    //             tile,
-    //         )
-    //     }
-    //     this.textures.on('loadtexture', (key, texture) => {
-    //         if (key == tile) {
-    //             console.log({ key, texture })
-    //             return trackMap.addTilesetImage(
-    //                 `../tiles/asphalt_road/${tile}.png`,
-    //                 tile,
-    //             )
-    //         }
-    //     })
-    // const onList = this.textures.list[tile];
-    // if (onList) {
-    //     return tileMap1.addTilesetImage(
-    //         `../tiles/asphalt_road/${tile}.png`,
-    //         tile,
-    //     );
-    // } else {
-    //     this.textures.on("onload", (key) => {
-    //         if (key === tile) {
-    //             console.log("should add Tile")
-    //             return tileMap1.addTilesetImage(
-    //                 `../tiles/asphalt_road/${tile}.png`,
-    //                 tile,
-    //             );
-    //         }
-    //     });
-    // }
-    // });
 
     trackMap.createLayer("grass", grass_tiles);
     trackMap.createLayer("track", asphalt_tiles);
 
-    // this.carSprite = this.matter.add.image(4000, 2300, "car_red_1");
-    var atlasTexture = this.textures.get("cars");
-    var frames = atlasTexture.getFrameNames();
-    console.log(frames);
-
     this.carSprite = this.matter.add.image(5450, 36400, "cars", "car_red_1");
-    /*this.ghost = this.matter.add.image(5550, 36400, "cars", "car_blue_1", {
-      mass: 400,
-    });
-    */
+
+    // LOAD OBSTACLES
 
     const tires = trackMap.getObjectLayer("tires");
     tires.objects.forEach((o) => {
@@ -95,13 +60,18 @@ export class Game extends Phaser.Scene {
         chamfer: 32,
       });
     });
+    
+    // LOAD NFT BANNERS
+    const nftBanners = trackMap.getObjectLayer('nft-banners').objects;
+    this.loadNFTs(nftBanners)
 
-    const startStop = trackMap.getObjectLayer("start-stop").objects[0];
+    // START STOP LINES
+    const startStop = trackMap.getObjectLayer("start-stop").objects;
 
     this.startLine = this.matter.add.rectangle(
-      startStop.x + 170,
-      startStop.y,
-      startStop.width,
+      startStop[0].x + 170,
+      startStop[0].y,
+      startStop[0].width,
       100,
       {
         isSensor: true,
@@ -110,9 +80,9 @@ export class Game extends Phaser.Scene {
     );
 
     this.stopLine = this.matter.add.rectangle(
-      startStop.x + 170,
-      startStop.y - 400,
-      startStop.width,
+      startStop[1].x + 170,
+      startStop[1].y - 400,
+      startStop[1].width,
       100,
       {
         isSensor: true,
@@ -156,31 +126,6 @@ export class Game extends Phaser.Scene {
             }
             this.timer.paused = true;
       }
-
-    // tentsLayer.objects.forEach((obj) => {
-    //     // this.tentsGroups.create(obj.x, obj.y, objects_images)
-    //     // console.log(this.tentsGroups);
-
-    //     this.matter.add.image(obj.x, obj.y, "tent_red", undefined, {
-    //         isStatic: true,
-    //     });
-    // });
-
-    // barrelsLayer.objects.forEach((obj) => {
-    //     // this.tentsGroups.create(obj.x, obj.y, objects_images)
-    //     // console.log(obj);
-
-    //     this.platforms = this.matter.add.sprite(
-    //         obj.x,
-    //         obj.y,
-    //         "tires_red",
-    //         undefined,
-    //         {
-    //             isStatic: false,
-    //             mass: 1000,
-    //         }
-    //     );
-    // });
   }
 }
 
@@ -223,6 +168,18 @@ export class Game extends Phaser.Scene {
         { x: vec.x * moveDir, y: vec.y * moveDir },
         { x: 500, y: 0 }
       );
+    }
+  }
+
+  loadNFTs(nftBanners) {
+    if(nftBanners) {
+      nftBanners.forEach(banner => {
+        this.load.image(`nft-banner-${banner.id}`, 'http://placekitten.com/300/200')
+        this.load.on(Phaser.Loader.Events.COMPLETE, () => {
+          this.add.image(banner.x + banner.width/2 , banner.y, `nft-banner-${banner.id}`)
+        })
+      });
+      this.load.start()
     }
   }
 }
