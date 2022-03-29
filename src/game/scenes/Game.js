@@ -149,7 +149,7 @@ export class Game extends Phaser.Scene {
     }
 
     if (this.cursors.up.isDown) {
-      this.carSprite.thrust(2);
+      this.carSprite.thrust(0.2);
     } else if (this.cursors.down.isDown) {
       this.carSprite.thrustBack(0.25);
     }
