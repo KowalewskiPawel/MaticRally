@@ -52,6 +52,8 @@ const App = () => {
 
       setDappContract(dappContract);
       window.dappContract = dappContract;
+      window.Moralis = Moralis;
+      window.user = user;
 
       try {
         memberNFT = await dappContract.checkIfUserHasNFT();

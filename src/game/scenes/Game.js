@@ -2,17 +2,20 @@ import Phaser from 'phaser';
 
 import trackJSON from "../assets/tracks/long_with_os.json";
 
+
 export class Game extends Phaser.Scene {
   constructor() {
     super({ key: "game" });
   }
+
+  competitors = {};
 
   preload() {
     this.load.setCORS("anonymous");
     this.load.tilemapTiledJSON("track_1", trackJSON);
   }
 
-  create() {
+  async create() {
     // TO REMOVE
     var atlasTexture = this.textures.get("cars");
     var frames = atlasTexture.getFrameNames();
@@ -108,6 +111,24 @@ export class Game extends Phaser.Scene {
         this.timer.paused = true;
       };
     };
+
+    let query = new window.Moralis.Query("PlayerPosition");
+    let subscription = await query.subscribe();
+    subscription.on("create", (plocation) => {
+      if (plocation.get("player") !== window.user.get("ethAddress")) {
+        if (this.competitors[plocation.get("player")] === undefined) {
+          this.competitors[plocation.get("player")] = this.matter.add.image(
+            plocation.get("x"),
+            plocation.get("y"),
+            "cars",
+            "car_red_1"
+          );
+        } else {
+          this.competitors[plocation.get("player")].x = plocation.get("x");
+          this.competitors[plocation.get("player")].y = plocation.get("y");
+        }
+      }
+    });
   }
 
   async update() {
@@ -152,20 +173,40 @@ export class Game extends Phaser.Scene {
         { x: 500, y: 0 }
       );
     }
+
+    if (
+      this.carSprite.lastX !== this.carSprite.x ||
+      this.carSprite.lastY !== this.carSprite.y
+    ) {
+      let userPosition = window.user;
+
+      const PlayerPosition = window.Moralis.Object.extend("PlayerPosition");
+      const playerPosition = new PlayerPosition();
+
+      playerPosition.set("player", userPosition.get("ethAddress"));
+      playerPosition.set("x", this.carSprite.x);
+      playerPosition.set("y", this.carSprite.y);
+
+      this.carSprite.lastX = this.carSprite.x;
+      this.carSprite.lastY = this.carSprite.y;
+
+      await playerPosition.save();
+    }
   }
 
   loadNFTs(nftBanners) {
-
     console.log(window.nftAd);
     if (nftBanners) {
       nftBanners.forEach((banner) => {
         this.load.image(`nft-banner-${banner.id}`, window.nftAd);
         this.load.on(Phaser.Loader.Events.COMPLETE, () => {
-          this.add.image(
-            banner.x + banner.width / 2,
-            banner.y,
-            `nft-banner-${banner.id}`
-          ).setScale(0.3);
+          this.add
+            .image(
+              banner.x + banner.width / 2,
+              banner.y,
+              `nft-banner-${banner.id}`
+            )
+            .setScale(0.3);
         });
       });
       this.load.start();
