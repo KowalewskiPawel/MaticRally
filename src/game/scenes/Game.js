@@ -117,15 +117,14 @@ export class Game extends Phaser.Scene {
     subscription.on("create", (plocation) => {
       if (plocation.get("player") !== window.user.get("ethAddress")) {
         if (this.competitors[plocation.get("player")] === undefined) {
-          this.competitors[plocation.get("player")] = this.matter.add.image(
-            plocation.get("x"),
-            plocation.get("y"),
-            "cars",
-            "car_red_1"
-          );
+          this.competitors[plocation.get("player")] = this.matter.add
+            .image(plocation.get("x"), plocation.get("y"), "cars", "car_red_1")
+            .setAngle(plocation.get("angle"));
         } else {
           this.competitors[plocation.get("player")].x = plocation.get("x");
           this.competitors[plocation.get("player")].y = plocation.get("y");
+          this.competitors[plocation.get("player")].angle =
+            plocation.get("angle");
         }
       }
     });
@@ -186,6 +185,7 @@ export class Game extends Phaser.Scene {
       playerPosition.set("player", userPosition.get("ethAddress"));
       playerPosition.set("x", this.carSprite.x);
       playerPosition.set("y", this.carSprite.y);
+      playerPosition.set("angle", this.carSprite.angle);
 
       this.carSprite.lastX = this.carSprite.x;
       this.carSprite.lastY = this.carSprite.y;
